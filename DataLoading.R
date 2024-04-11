@@ -1,3 +1,11 @@
+#
+#	DataLoading.R
+#	Advanced Statistics
+#
+#	Created by Diego Revilla on 08/04/24
+#	Copyright � 2024 All Rights reserved
+#
+
 obesity_data_loading <- function(path) {
   data <- read.csv(path)
   
