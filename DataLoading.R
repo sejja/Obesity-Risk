@@ -1,11 +1,4 @@
-#
-#	DataLoading.R
-#	Advanced Statistics
-#
-#	Created by Diego Revilla on 08/04/24
-#	Copyright � 2024 All Rights reserved
-#
-
+# Function to load the obesity dataset
 obesity_data_loading <- function(path) {
   data <- read.csv(path)
   
@@ -22,3 +15,22 @@ obesity_data_loading <- function(path) {
 }
 
 obesity_data <- obesity_data_loading('Datasets/ObesityDataSet.csv')
+
+
+
+
+t1 <- table(obesity_data$Gender , obesity_data$NObeyesdad)
+t1
+# Convert the table to a data frame
+count_df <- as.data.frame.table(t1)
+
+# Plot using ggplot2
+ggplot(count_df, aes(x = Var2, y = Freq, fill = Var1)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "Count of Overweight Categories by Gender",
+       x = "Gender", y = "Count") +
+  scale_fill_manual(values = c("blue", "red")) +
+  theme_minimal() +
+  theme(legend.position = "top")
+
+table(obesity_data$NObeyesdad)
