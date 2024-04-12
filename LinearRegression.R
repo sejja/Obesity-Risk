@@ -2,11 +2,12 @@
 
 data_lm <- obesity_data
 
-# Calculate the confident interval
-confint((linear_regression_model))
 
 # Perform linear regression
 linear_regression_model <- lm(Weight ~ Height + family_history_with_overweight + FCVC + FAF ,data = data_lm)
+
+# Calculate the confident interval
+confint((linear_regression_model))
 
 # Summarize the regression results
 anova(linear_regression_model)
