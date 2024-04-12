@@ -2,7 +2,6 @@
 
 data_lm <- obesity_data
 
-
 # Calculate the confident interval
 confint((linear_regression_model))
 
@@ -17,11 +16,11 @@ plot(obesity_data$Weight, fitted(linear_regression_model), main = "Actual vs. Pr
 abline(0, 1, col = "red",)  # Add a diagonal line for perfect prediction
 
 
-
 # Let's check the heteroscedasticity
 plot(linear_regression_model,1)
 
 # Let's check the influential points with cooks distance
 plot(linear_regression_model,4)
 
-
+# Interpretation
+summary(linear_regression_model)

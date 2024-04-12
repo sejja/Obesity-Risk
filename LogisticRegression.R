@@ -6,11 +6,13 @@
 #	Copyright � 2024 All Rights reserved
 #
 
-# Load required libraries
+#Load required libraries
 library(faraway)  # For data (assuming it contains 'obesity_data' dataset)
+library(arules)  # For association rules mining (not used in the provided code)
+library(ResourceSelection)  # For model selection (not used in the provided code)
 library(caret)  # For machine learning model evaluation
+library(pROC)  # For ROC curve analysis
 
-# Load data
 data <- obesity_data
 
 # Convert the response variable to binary: Obesity_Type_III and Obesity_Type_II are marked as 1, others as 0
@@ -72,6 +74,12 @@ hoslem.test(data$NObeyesdad, model6$fitted.values)
 # Summarize model coefficients and interpret the exponentiated coefficients
 summary(model1)
 exp(model1$coefficients)
+
+cp <- 0.5 
+
+# Extract response and predicted values
+response <- data$NObeyesdad
+prediction <- ifelse(model6$fitted.values < cp, 0, 1)
 
 # Plot ROC curve
 par(pty = "s")
