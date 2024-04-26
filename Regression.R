@@ -1,3 +1,4 @@
+<<<<<<< HEAD:LogisticRegression.R
 #
 # LogisticRegression.R
 # Obesity Risk
@@ -6,11 +7,103 @@
 # Copyright � 2024 . All Rights reserved
 # 
 
+=======
+############################################################################################
+
+# LIBRARIES
+
+
+library(ggplot2) # For some basic plotting while exploring the data
+>>>>>>> 0f1c5c57028ce556d3d80f3ba718031ca0924ce3:Regression.R
 library(faraway)  # For data (assuming it contains 'obesity_data' dataset)
 library(arules)  # For association rules mining (not used in the provided code)
 library(ResourceSelection)  # For model selection (not used in the provided code)
 library(caret)  # For machine learning model evaluation
 library(pROC)  # For ROC curve analysis
+library(dplyr) # For data manipulation
+
+
+############################################################################################
+
+# DATA LOADING
+
+
+
+obesity_data_loading <- function(path) {
+  data <- read.csv(path)
+  
+  factorized_columns <- c('Gender', 'CAEC', 'CALC', 'MTRANS', 'NObeyesdad')
+  booleanized_columns <- c('FAVC', 'family_history_with_overweight', 'SMOKE', 'SCC')
+  lapply(factorized_columns, function(x) {data[[x]] <<- factor(data[[x]])})  
+  lapply(booleanized_columns, function(x) {data[[x]] <<- data[[x]] == 'yes'})  
+  
+  return(data)  
+}
+
+obesity_data <- obesity_data_loading('Datasets/ObesityDataSet.csv')
+
+
+
+
+
+############################################################################################
+
+# LINEAR REGRESSION
+
+data_linear <- obesity_data
+
+# Assuming your dataset is called 'obesity_data' and you want to include only numeric variables
+
+# Select only numeric variables
+numeric_data <- obesity_data[, sapply(obesity_data, is.numeric)]
+
+# Compute correlation matrix
+correlation_matrix <- cor(numeric_data)
+
+# Build dummy variables
+data_linear$CALC <- ifelse(data_linear$CALC == 'Frequently' | data_linear$CALC == 'Always',1,0)
+data_linear$CAEC <- ifelse(data_linear$CAEC == 'Frequently' | data_linear$CAEC == 'Always',1,0)
+data_linear$MTRANS<- ifelse(data_linear$MTRANS == 'Automobile' | data_linear$CALC == 'Public_Transport',1,0)
+
+# Calculate different linear regression models by backwards elimination
+lm0 <- lm(Weight ~ Gender + Age + Height + family_history_with_overweight + FAVC + FCVC + NCP + CAEC + SMOKE + CH2O + SCC + FAF + TUE + CALC + MTRANS ,data = data_linear)
+summary(lm0) # Exclude SMOKE variable from our model
+
+lm1 <- lm(Weight ~ Gender + Age + Height + family_history_with_overweight + FAVC + FCVC + NCP + CAEC +  CH2O + SCC + FAF + TUE + CALC + MTRANS ,data = data_linear)
+summary(lm1) # Exclude CALC variable from our model
+
+lm2 <- lm(Weight ~ Gender + Age + Height + family_history_with_overweight + FAVC + FCVC + NCP + CAEC +  CH2O + SCC + FAF + TUE + MTRANS ,data = data_linear)
+summary(lm2) # Exclude NCP variable from our model
+
+lm3 <- lm(Weight ~ Gender + Age + Height + family_history_with_overweight + FAVC + FCVC +  CAEC +  CH2O + SCC + FAF + TUE + MTRANS ,data = data_linear)
+summary(lm3) # We are also going to exclude Gender (Explanation on the report)
+
+lm4 <- lm(Weight ~  Age + Height + family_history_with_overweight + FAVC + FCVC +  CAEC +  CH2O + SCC + FAF + TUE + MTRANS ,data = data_linear)
+summary(lm4)
+
+# Let's study our refined model in detail
+linear_regression_model <- lm4
+
+# Calculate the confidence interval
+confint(linear_regression_model)
+
+# Summarize the regression results
+anova(linear_regression_model)
+
+# Plot the predicted weight against the actual weight
+plot(obesity_data$Weight, fitted(linear_regression_model), main = "Actual vs. Predicted", xlab = "Actual Weight", ylab = "Predicted Weight")
+abline(0, 1, col = "red")  # Add a diagonal line for perfect prediction
+
+# Let's check the normality of Residuals
+plot(linear_regression_model, 2)
+
+# Let's check the influential points with Cook's distance
+plot(linear_regression_model, 4)
+
+
+############################################################################################
+
+# LOGISTIC REGRESSION
 
 data_logistic <- obesity_data
 
@@ -98,3 +191,6 @@ prediction <- ifelse(model1$fitted.values < cp, 0, 1)
 # Evaluate model performance using confusion matrix with new threshold
 tab <- confusionMatrix(as.factor(prediction), as.factor(response), positive = "1")
 tab
+
+
+
