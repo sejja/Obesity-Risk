@@ -1,3 +1,11 @@
+#
+# DataLoading.R
+# Obesity Risk
+#
+# Created by Diego Revilla on 26/04/24
+# Copyright � 2024 . All Rights reserved
+# 
+
 # Function to load the obesity dataset
 obesity_data_loading <- function(path) {
   data <- read.csv(path)

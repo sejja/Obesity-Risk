@@ -1,3 +1,11 @@
+#
+# LinearRegression.R
+# Obesity Risk
+#
+# Created by Diego Revilla on 26/04/24
+# Copyright � 2024 . All Rights reserved
+# 
+
 data_linear <- obesity_data
 
 # Assuming your dataset is called 'obesity_data' and you want to include only numeric variables

@@ -1,3 +1,11 @@
+#
+# LogisticRegression.R
+# Obesity Risk
+#
+# Created by Diego Revilla on 26/04/24
+# Copyright � 2024 . All Rights reserved
+# 
+
 library(faraway)  # For data (assuming it contains 'obesity_data' dataset)
 library(arules)  # For association rules mining (not used in the provided code)
 library(ResourceSelection)  # For model selection (not used in the provided code)
