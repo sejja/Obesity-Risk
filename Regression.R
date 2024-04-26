@@ -1,20 +1,17 @@
-<<<<<<< HEAD:LogisticRegression.R
 #
-# LogisticRegression.R
+# Regression.R
 # Obesity Risk
 #
 # Created by Diego Revilla on 26/04/24
 # Copyright � 2024 . All Rights reserved
 # 
 
-=======
 ############################################################################################
 
 # LIBRARIES
 
 
 library(ggplot2) # For some basic plotting while exploring the data
->>>>>>> 0f1c5c57028ce556d3d80f3ba718031ca0924ce3:Regression.R
 library(faraway)  # For data (assuming it contains 'obesity_data' dataset)
 library(arules)  # For association rules mining (not used in the provided code)
 library(ResourceSelection)  # For model selection (not used in the provided code)
