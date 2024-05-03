@@ -45,3 +45,20 @@ colnames(correlations) <- c("Correlation_Coord1", "Correlation_Coord2")
 
 # Assign row names to correlations
 rownames(correlations) <- colnames(pca_dataset)
+
+# Given that the data is standardized, the center of the cloud is the zero vector.
+# Therefore the distance to the center of every individual is just the modulus of the vector
+sqrt(apply(pca_dataset^2,MARGIN=1,FUN=sum))
+
+# Influential #
+# Influential individuals or variables can be detected by computing their contribution to the coordinates and correlations
+# Individual contribution
+indcontr1 <- (coordinates[,1]^2)/sum(coordinates[,1]^2)
+indcontr2 <- (coordinates[,2]^2)/sum(coordinates[,2]^2)
+
+# Variable contribution
+varcontr1 <- (correlations[,1]^2)/sum(correlations[,1]^2)
+varcontr2 <- (correlations[,2]^2)/sum(correlations[,2]^2)
+
+pca1 <- PCA(pca_dataset,scale.unit = TRUE)
+variable_correlation <- (pca1$var$cor)^2
