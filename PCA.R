@@ -95,3 +95,4 @@ arrows(x0 = 0,y0 = 0,x1 = variable_correlation[,1],y1=variable_correlation[,2],l
 abline(h=0,v=0,lty=2)
 text(variable_correlation[,1]+0.1,variable_correlation[,2]+0.1,labels = row.names(variable_correlation),cex=1)
 title(main = "PCA Analysis: PCA Final Analysis")
+
