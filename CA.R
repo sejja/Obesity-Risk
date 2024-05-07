@@ -39,18 +39,6 @@ xtest$p.value
 
 
 
-
-
-
-# Let's compute the row profile
-
-# Row profiles
-row_prof <- rbind(obesity_table,apply(obesity_table,2,sum))
-rownames(row_prof)[4] <- "Mean profile"
-row_prof <- round(prop.table(as.matrix(row_prof),margin=1),2)  #prop.table: Express Table Entries as Fraction of Marginal Table
-row_prof
-
-
 # Perfrom eigendecomposition 
 
 M <- xtest$residuals/sqrt(total_observations) 
@@ -60,13 +48,15 @@ eig <- eigen(M)
 
 cumulative <- cumsum(eig$values)/sum(eig$values)
 
+
+
 # Create a plot for explained variance
 plot(1:length(eig$values), eig$values,  ylim = c(0, 1.1), type = "b", pch = 19, col = "darkblue", 
      xlab = "Component", ylab = "Explained Variance",
      main = "Explained Variance by Component")
 
 lines(1:length(eig$values), cumulative, type = "b", pch = 19, col = "red")
-legend("bottomleft", legend = c("Explained Variance", "Cumulative Variance"),col = c("darkblue", "red"), lty = 1, pch = 19)
+legend("center", legend = c("Cumulative Variance","Explained Variance" ),col = c("red", "darkblue"), lty = 1, pch = 19)
 
 
 
