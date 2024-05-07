@@ -1,6 +1,6 @@
 library(dplyr)
 library(knitr)
-
+library(ca)
 
 
 # Construct a contingency table 
