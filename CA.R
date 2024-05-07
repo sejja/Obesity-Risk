@@ -18,6 +18,9 @@ kable(prob_table)
 xtest <- chisq.test(obesity_table)
 xtest
 
+# Calculate the total number of observations
+total_observations <- sum(obesity_table)
+
 
 # Get expected values
 kable(round(xtest$expected, 0))
