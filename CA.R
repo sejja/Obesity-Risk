@@ -3,6 +3,7 @@ library(knitr)
 library(ca)
 
 
+
 # Construct a contingency table 
 obesity_table <- table(obesity_data$CAEC, obesity_data$NObeyesdad) %>% as.data.frame.array() %>% 
   select(Insufficient_Weight,Normal_Weight,Overweight_Level_I,Overweight_Level_II,Obesity_Type_I,Obesity_Type_II,Obesity_Type_III)
