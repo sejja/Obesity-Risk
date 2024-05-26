@@ -31,7 +31,7 @@ obesity_data_loading <- function(path) {
   
   factorized_columns <- c('Gender', 'CAEC', 'CALC', 'MTRANS', 'NObeyesdad')
   booleanized_columns <- c('FAVC', 'family_history_with_overweight', 'SMOKE', 'SCC')
-  lapply(factorized_columns, function(x) {data[[x]] <<- factor(data[[x]])})  
+  
   lapply(booleanized_columns, function(x) {data[[x]] <<- data[[x]] == 'yes'})  
   
   return(data)  
