@@ -2,34 +2,6 @@ library(FactoMineR)
 library(tidyverse)
 library(ggplot2)
 
-
-
-
-############################################################################################
-
-# DATA LOADING
-
-
-
-obesity_data_loading <- function(path) {
-  data <- read.csv(path)
-  
-  factorized_columns <- c('Gender', 'CAEC', 'CALC', 'MTRANS', 'NObeyesdad')
-  booleanized_columns <- c('FAVC', 'family_history_with_overweight', 'SMOKE', 'SCC')
-  
-  lapply(booleanized_columns, function(x) {data[[x]] <<- data[[x]] == 'yes'})  
-  
-  return(data)  
-}
-
-obesity_data <- obesity_data_loading('Datasets/ObesityDataSet.csv')
-
-
-
-# Source PCA code
-
-source("PCA.R")
-
 ############################################################################################
 
 # K-MEANS CLUSTERING
@@ -81,31 +53,3 @@ ggplot(obesity_data, aes(x = Cluster, y = NObeyesdad_numeric)) +
   labs(title = "Distribution of Obesity Levels by Cluster",
        x = "Cluster", y = "Obesity Level (Numeric)") +
   theme_minimal()
-
-
-
-
-############################################################################################
-
-
-
-# HIERARCHICAL CLUSTERING
-
-
-distance_matrix <- dist(pca1$ind$coord[1:20, ], method = "euclidean")
-hc.out <-  hclust(distance_matrix, method = "complete")
-hc.clusters <- cutree(hc.out , length(unique(obesity_data$NObeyesdad[1:20])))
-plot(hc.out)
-table(hc.clusters , obesity_data$NObeyesdad[1:20])
-
-distance_matrix <- dist(pca1$ind$coord, method = "euclidean")
-hc.out <-  hclust(distance_matrix, method = "complete")
-hc.clusters <- cutree(hc.out , length(unique(obesity_data$NObeyesdad)))
-matrix <- table(hc.clusters , obesity_data$NObeyesdad)
-colnames(matrix) <- c("Ins", "Nor", "Ob1", "Ob2", "Ob3", "Ow1", "Ow2")
-plot(matrix)
-
-
-############################################################################################
-
-
